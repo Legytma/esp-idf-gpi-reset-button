@@ -1,0 +1,38 @@
+menu "GPI Reset Button"
+    config GPI_RESET_BUTTON_GPIO
+        int "GPIO"
+        default 34
+        help
+            GPIO number on which the "Reset" button is connected. This is generally used
+            by the application for custom operations like toggling states, resetting to defaults, etc.
+
+    config GPI_RESET_BUTTON_PRESSED_LOGIC_LEVEL
+        int "Pressed Logic Level"
+        default 0
+        help
+            Pressed Logic Level.
+
+    config GPI_RESET_BUTTON_THRESHOLD_RESET_WIFI
+        int "Threshold Reset WiFi"
+        default 10000
+        help
+            Threshold Reset WiFi in milliseconds.
+
+    config GPI_RESET_BUTTON_THRESHOLD_RESET_FACTORY
+        int "Threshold Reset Factory"
+        default 20000
+        help
+            Threshold Reset Factory in milliseconds.
+
+    config GPI_RESET_BUTTON_THRESHOLD_RESET_DELAY
+        int "Reset Delay"
+        default 3
+        help
+            Reset Delay in seconds.
+
+    config GPI_RESET_BUTTON_THRESHOLD_REBOOT_DELAY
+        int "Reboot Delay"
+        default 3
+        help
+            Reboot Delay in seconds.
+endmenu
