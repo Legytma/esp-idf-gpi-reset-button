@@ -30,17 +30,14 @@ static inline clock_t get_time_ms() {
 
 static void gpi_event_change_handler(void *handler_args, esp_event_base_t base,
 									 int32_t id, void *event_data) {
-	LOG_FUN_START_D;
-	LOGI("gpi_event_change_handler(%s:GPI_AR_EVENT_CHANGE)", base);
+	LOG_FUN_START_V;
+	LOGD("gpi_event_change_handler(%s:GPI_AR_EVENT_CHANGE)", base);
 
 	gpi_reset_button_config_t *config =
 		(gpi_reset_button_config_t *)handler_args;
 	uint64_t event_value = *((uint64_t *)event_data);
 
-	LOGE("sizeof(uint64_t) = %d", sizeof(uint64_t));
-	LOGE("sizeof(uint32_t) = %d", sizeof(uint32_t));
-	LOGE("sizeof(unsigned int) = %d", sizeof(unsigned int));
-	LOGI(U64_STR "  %08X%08X  %llu", PRINT_U64(event_value),
+	LOGD(U64_STR "  %08X%08X  %llu", PRINT_U64(event_value),
 		 ((unsigned int)(event_value >> 32)), ((unsigned int)event_value), event_value);
 
 	bool press_state =
@@ -50,16 +47,16 @@ static void gpi_event_change_handler(void *handler_args, esp_event_base_t base,
 		config->press_time  = get_time_ms();
 		config->press_state = true;
 
-		LOGW("press_time: %lu", config->press_time);
+		LOGD("press_time: %lu", config->press_time);
 	} else if (config->press_state) {
 		config->release_time = get_time_ms();
 		config->press_state  = false;
 
-		LOGW("release_time: %lu", config->release_time);
+		LOGD("release_time: %lu", config->release_time);
 
 		clock_t diff = config->release_time - config->press_time;
 
-		LOGW("diff: %lu", diff);
+		LOGD("diff: %lu", diff);
 
 		if (diff > config->threshold_reset_factory) {
 			ESP_ERROR_CHECK(esp_rmaker_factory_reset(config->reset_delay,
@@ -70,7 +67,7 @@ static void gpi_event_change_handler(void *handler_args, esp_event_base_t base,
 		}
 	}
 
-	LOG_FUN_END_D;
+	LOG_FUN_END_V;
 }
 
 void gpi_reset_button_init(gpi_reset_button_config_t *config) {
