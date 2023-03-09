@@ -12,8 +12,6 @@
 #include "esp_err.h"
 // #include "esp_bit_defs.h"
 
-#include "esp_rmaker_utils.h"
-
 #include "log_utils.h"
 #include "gpi_event.h"
 #include "gpi.h"
